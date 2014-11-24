@@ -13,9 +13,21 @@
 		<property name="taxId" value="1234" />
 		<property name="address" ref="address" />
 	</bean>
+	
+	<bean id="person2" class="comm.it99plus.srpring.test.Person"
+		scope="singleton" init-method="onCreate" destroy-method="onDestroy"
+		factory-method="createPerson" factory-bean="personFactory">
+		<constructor-arg value="654" name="id" type="int" />
+		<constructor-arg value="Mike" name="name" />		
+		<property name="taxId" value="1234" />
+		<property name="address" ref="address" />
+	</bean>
 
 	<bean id="address" class="comm.it99plus.srpring.test.Address">
 		<constructor-arg name="street" value="1 Chruch Lane" />
 		<constructor-arg name="postcode" value="9876" />
+	</bean>
+	<bean id="personFactory"
+		class="comm.it99plus.srpring.test.PersonFactory">
 	</bean>
 </beans>
