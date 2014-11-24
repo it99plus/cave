@@ -4,13 +4,13 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-	<bean id="person" class="comm.it99plus.srpring.test.Person">
+	<bean id="person" class="comm.it99plus.srpring.test.Person"	scope="prototype">
 		<constructor-arg value="777" name="id" type="int" />
 		<constructor-arg value="Mary" name="name" />
 		<property name="taxId" value="1234" />
 		<property name="address" ref="address" />
 	</bean>
-	
+
 	<bean id="address" class="comm.it99plus.srpring.test.Address">
 		<constructor-arg name="street" value="1 Chruch Lane" />
 		<constructor-arg name="postcode" value="9876" />
