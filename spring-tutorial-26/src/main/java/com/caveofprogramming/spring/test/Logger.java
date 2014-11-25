@@ -15,7 +15,7 @@ public class Logger {
 	/* if required is set to false and the bean is not defined in the 
      file, the compiler  will not attempt to inject - but if it is 
      true than the compiler will complain with BeanCreationException */
-	@Autowired(required=true) 
+	@Autowired(required=false) 
 	public void setConsoleWriter(ConsoleWriter writer) {
 		this.consoleWriter = writer;
 	}

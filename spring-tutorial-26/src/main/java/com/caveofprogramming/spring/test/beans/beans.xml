@@ -12,6 +12,9 @@
 
 
 
+<!-- 	<bean id="consoleWriter" class="com.caveofprogramming.spring.test.ConsoleWriter"> -->
+<!-- 	</bean> -->
+	
 	<bean id="fileWriter" class="com.caveofprogramming.spring.test.FileWriter">
 	</bean>
 
