@@ -10,9 +10,14 @@
 
 	</bean>
 
+	<bean id="consoleWriter" class="com.caveofprogramming.spring.test.ConsoleWriter">
+	</bean>
 
+	<bean id="lkjhkhlkhkhlkh" class="com.caveofprogramming.spring.test.ConsoleWriter">
+		<qualifier value="toconsole"></qualifier>
+	</bean>
 
-	<bean id="fileWriter" class="com.caveofprogramming.spring.test.FileWriter">
+	<bean id="asdfdff" class="com.caveofprogramming.spring.test.FileWriter">
 	</bean>
 
 

@@ -1,6 +1,7 @@
 package com.caveofprogramming.spring.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /*
  * Dummy implementation of logger.
@@ -9,19 +10,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class Logger {
 
 	private ConsoleWriter consoleWriter;
-	private FileWriter fileWriter;
+	private LogWriter fileWriter;
 	
 	
 	/* if required is set to false and the bean is not defined in the 
      file, the compiler  will not attempt to inject - but if it is 
      true than the compiler will complain with BeanCreationException */
-	@Autowired(required=true) 
+	@Autowired(required=false) 
+	@Qualifier("toconsole")
 	public void setConsoleWriter(ConsoleWriter writer) {
 		this.consoleWriter = writer;
 	}
 
 	@Autowired
-	public void setFileWriter(FileWriter fileWriter) {
+	@Qualifier("filewriter")
+	public void setFileWriter(LogWriter fileWriter) {
 		this.fileWriter = fileWriter;
 	}
 	
