@@ -11,9 +11,12 @@ public class JdbcDemo {
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
 		JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl",JdbcDaoImpl.class );
 		
-		Staff staff = dao.getStaff(2);
-		System.out.println("Staff id: " + staff.getId() + " " + staff.getName());
 		
+		System.out.println(dao.getStaffName(2));
+		
+//		Staff staff = dao.getStaff(2);
+//		System.out.println("Staff id: " + staff.getId() + " " + staff.getName());
+//		
 //		Staff staff = new JdbcDaoImpl().getStaff(2);
 //		System.out.println(staff.getId() + " : " + staff.getName());
 		 
