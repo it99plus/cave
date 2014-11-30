@@ -6,37 +6,36 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.it99plus.model.Staff;
 
 @Component
 public class JdbcDaoImpl {
+	
+	@Autowired
+	private DataSource dataSource;
 
 	public Staff getStaff(int staffId) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		String url = "jdbc:mysql://localhost:3306/zoodb";
+		// String url = "jdbc:mysql://localhost:3306/zoodb";
 		Staff staff = null;
 		try {
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			conn = DriverManager.getConnection(url, "root", "4321");
-			ps = conn
-					.prepareStatement("Select * From staff where staff_id = ?");
+		//	Class.forName("com.mysql.jdbc.Driver").newInstance();
+		//	conn = DriverManager.getConnection(url, "root", "4321");
+			conn = dataSource.getConnection();
+			ps = conn.prepareStatement("Select * From staff where staff_id = ?");
 			ps.setInt(1, staffId);
 			rs = ps.executeQuery();
 
 			if (rs.next()) {
 				staff = new Staff(staffId, rs.getString("name"));
 			}
-
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -50,6 +49,16 @@ public class JdbcDaoImpl {
 		}
 		return staff;
 
+	}
+
+
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
 	}
 
 }
