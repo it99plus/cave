@@ -1,5 +1,7 @@
 		package com.it99plus.model;
 
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -12,7 +14,16 @@ public class JdbcDemo {
 		JdbcDaoImpl dao = ctx.getBean("jdbcDaoImpl",JdbcDaoImpl.class );
 		
 		
-		System.out.println(dao.getStaffName(2));
+		List<Staff> listStaffs = dao.getAllStaffs();
+		for (Staff staff : listStaffs) {
+			System.out.println(staff.getId() + " : " + staff.getName());
+		}
+		
+		System.out.println(dao.getAllStaffs().size());
+		
+//		System.out.println(dao.getStaffforId(2).getName());
+		
+//		System.out.println(dao.getStaffName(2));
 		
 //		Staff staff = dao.getStaff(2);
 //		System.out.println("Staff id: " + staff.getId() + " " + staff.getName());
@@ -22,3 +33,4 @@ public class JdbcDemo {
 		 
 	}
 }
+  

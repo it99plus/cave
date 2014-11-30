@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.List;
 import javax.sql.DataSource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.it99plus.model.Staff;
@@ -51,6 +51,24 @@ public class JdbcDaoImpl {
 		}
 	}
 
+	public DataSource getDataSource() {
+		return dataSource;
+	}
+
+	@Autowired
+	public void setDataSource(DataSource dataSource) {
+		this.jdbcTemplate = new JdbcTemplate(dataSource);
+		// this.dataSource = dataSource;
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 	public int getStaffCount() {
 		// String sql = "SELECT COUNT(*) FROM STAFF";
 		// jdbcTemplate.setDataSource(getDataSource());
@@ -75,24 +93,33 @@ public class JdbcDaoImpl {
 
 	public String getStaffName(int staffId) {
 		String sql = "SELECT NAME FROM STAFF WHERE STAFF_ID = ?";
-		return jdbcTemplate.queryForObject(sql, new Object[] {staffId}, String.class);
+		return jdbcTemplate.queryForObject(sql, new Object[] { staffId },
+				String.class);
 	}
 
-	public DataSource getDataSource() {
-		return dataSource;
+	public Staff getStaffforId(int staffId) {
+		String sql = "SELECT * FROM STAFF WHERE STAFF_ID = ?";
+		return jdbcTemplate.queryForObject(sql, new Object[] { staffId },
+				new StaffMaper());
+		// jdbcTemplate.queryForObject(sql, args, rowMapper)
 	}
 
-	@Autowired
-	public void setDataSource(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource);
-		// this.dataSource = dataSource;
+	public List<Staff> getAllStaffs() {
+		String sql = "SELECT * FROM STAFF";
+		 return jdbcTemplate.query(sql, new StaffMaper());
 	}
 
-	public JdbcTemplate getJdbcTemplate() {
-		return jdbcTemplate;
+	// inner class
+	private static final class StaffMaper implements RowMapper<Staff> {
+
+		public Staff mapRow(ResultSet resultSet, int rowNum)
+				throws SQLException {
+			Staff staff = new Staff();
+			staff.setId(resultSet.getInt("staff_id"));
+			staff.setName(resultSet.getString("name"));
+			return staff;
+		}
+
 	}
 
-	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 }
